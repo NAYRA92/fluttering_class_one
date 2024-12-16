@@ -18,23 +18,46 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.blue,
       body: Center(
-        child: Container(
-          child: Center(
-            child: Text(
-              "LOGO",
-              style: TextStyle(
-                fontSize: 36,
-                color: Colors.white,
-                fontWeight: FontWeight.w600
+        child: Column(
+          children: [
+            Container(
+              child: Center(
+                child: Text(
+                  "LOGO",
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600
+                  ),
+                  )
+                ),
+              height: 300, //pixel
+              width: 300,
+              decoration: BoxDecoration(
+                color: const Color(0xffbb14aa), //0xff before the hexa color bb14aa
+                borderRadius: BorderRadius.circular(25) //rounded border radius,
               ),
-              )
             ),
-          height: 300, //pixel
-          width: 300,
-          decoration: BoxDecoration(
-            color: const Color(0xffbb14aa), //0xff before the hexa color bb14aa
-            borderRadius: BorderRadius.circular(25) //rounded border radius,
-          ),
+         
+            TextFormField(
+              decoration: InputDecoration(
+                hintText: "Enter username"
+              ),
+
+            ),
+
+
+            TextFormField(
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Enter password"
+              ),
+            ),
+
+            ElevatedButton(
+              onPressed: (){}, 
+              child: Text("LOGIN"))
+          ],
         ),
       ),
     );
