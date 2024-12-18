@@ -17,6 +17,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenW = MediaQuery.of(context).size.width;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -27,10 +29,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Column(
               children: [
                 
-                  TextFormField(
-                    controller: _mobile,
-                    decoration: InputDecoration(
-                      hintText: "اكتب رقم الجوال"
+                  Container(
+                    width: screenW/2, //from media query
+                    child: TextFormField(
+                      controller: _mobile,
+                      decoration: InputDecoration(
+                        hintText: "اكتب رقم الجوال"
+                      ),
                     ),
                   ),
             
