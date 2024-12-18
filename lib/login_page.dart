@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttering_class_one/home_page.dart';
+import 'package:fluttering_class_one/registration_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,10 +13,69 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _username = TextEditingController();
-
   TextEditingController _password = TextEditingController();
+  String textname = "";
 
-  String textname = "name must be here";
+  String name = "";
+  String password = "";
+
+  bool exist = false;
+
+  
+  Future<bool> checkExist(String docID) async {
+    try {
+      await FirebaseFirestore.instance
+      .doc("students/$docID")
+      .get().then((doc) {
+        if (doc.exists) {
+          //if document exist, check user password
+          //here I made the document ID as user mobile number
+
+          Map<String, dynamic> data = doc.data()!;
+          // You can then retrieve the value from the Map like this:
+          name = data['name'];
+          password = data['password'];
+
+          if (password == _password.text) {
+           //
+            exist = true;
+            //if entered password is correct, go to next screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(
+                  user_name: name,
+                ),));
+          }
+
+        //if entered value is not equal to document password
+        else if (password != _password.text) {
+            print("Worng password");
+            setState(() {
+              textname = "كلمة مرور خاطئة";
+            });
+          }
+        }
+        
+        //if document not exists
+        else if (!doc.exists) {
+          exist = false;
+          setState(() {
+          print("user not found");
+          textname =  "اعد المحاولة مرة أخرى";
+        });
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      });
+      return exist;
+    } catch (e) {
+      // If any error
+      print(e);
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 controller: _username,
                 decoration: InputDecoration(
-                  hintText: "أكتب اسم المستخدم"
+                  hintText: "اكتب رقم الجوال"
                 ),
               ),
       
@@ -77,33 +138,45 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 obscureText: true,
               ),
+              
+              SizedBox(height: 15,),
       
               ElevatedButton(
                 onPressed: (){
+
+                  checkExist(_username.text);
+
                   // setState(() {
                   //   textname =  _username.text; //setState to change the text حالياً
                   // });
       
-                  if(_username.text == "nayra"
-                  && _password.text == "123"){
-                    setState(() {
-                    textname =  "تم تسجيل الدخول بنجاح";
-                  });
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context)=> HomePage(
-                      user_name: _username.text,
-                      )),
-                  );
-                  }
-                  else {
-                     setState(() {
-                    textname =  "اعد المحاولة مرة أخرى"; //setState to change the text حالياً
-                  });
-                  }
+                  // if(_username.text == "nayra"
+                  // && _password.text == "123"){
+                  //   setState(() {
+                  //   textname =  "تم تسجيل الدخول بنجاح";
+                  // });
+                  // Navigator.push(
+                  //   context, 
+                  //   MaterialPageRoute(
+                  //     builder: (context)=> HomePage(
+                  //     user_name: _username.text,
+                  //     )),
+                  // );
+                  // }
+                  // else {
+                  //    setState(() {
+                  //   textname =  "اعد المحاولة مرة أخرى"; //setState to change the text حالياً
+                  // });
+                  // }
                 }, 
                 child: Text("تسجيل الدخول")),
+
+                 TextButton(
+                  onPressed: () {
+                   Navigator.push(context, 
+                   MaterialPageRoute(builder: (context)=> RegistrationPage()));
+                  }, 
+                  child: Text("تسجيل حساب جديد")),
       
               Text(textname)
             ],

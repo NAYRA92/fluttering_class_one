@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "223732571114",
+    "project_id": "fluttering-training",
+    "storage_bucket": "fluttering-training.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223732571114:android:d8d8fac21380be31f3f093",
+        "android_client_info": {
+          "package_name": "com.starcodedev.fluttering_training"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaP4wzhZDhYhBmVyOISPJeisoOdMNvc8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
